@@ -33,7 +33,7 @@ def run_chat():
             break
 
         history.append({'role': 'user', 'content': user_input})
-        print('History so far:', history)
+        #print('History so far:', history)
 
         response = client.messages.create(
             model='claude-haiku-4-5-20251001',
