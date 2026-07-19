@@ -82,12 +82,7 @@ def run_recipe_agent():
         input_tokens = response.usage.input_tokens
         output_tokens = response.usage.output_tokens
 
-        print(
-            f"Tokens used: "
-            f"Input {input_tokens} | "
-            f"Output {output_tokens} | "
-            f"Total {input_tokens + output_tokens}\n"
-        )
+        
 
 
 if __name__ == "__main__":
