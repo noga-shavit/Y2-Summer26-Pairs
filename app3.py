@@ -6,6 +6,23 @@ load_dotenv()
 
 client = Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
 
+def save_recipe(recipe):
+    try:
+        with open("recipebook.json", "r") as f:
+            recipe_book = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        recipe_book = {"recipes": []}
+
+    if not isinstance(recipe_book.get("recipes"), list):
+        recipe_book["recipes"] = []
+
+    recipes = recipe_book["recipes"]
+    recipes.append(recipe)
+
+    with open("recipebook.json", "w") as f:
+        json.dump(recipe_book, f, indent=2)
+
+
 def run_chat():
     print('You: (type exit to quit)')
     system_message = """
