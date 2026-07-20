@@ -1,4 +1,5 @@
 import os
+import json
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
@@ -21,6 +22,36 @@ def save_recipe(recipe):
 
     with open("recipebook.json", "w") as f:
         json.dump(recipe_book, f, indent=2)
+
+
+def extract_json_section_to_txt(json_path, section_key, output_txt_path):
+    """
+    Reads a shared JSON file, extracts a specific agent section, 
+    and writes it to a clean text file.
+    """
+    if not os.path.exists(json_path):
+        return f"Error: Shared JSON file not found at: {json_path}"
+        
+    try:
+        with open(json_path, 'r', encoding='utf-8') as json_file:
+            shared_data = json.load(json_file)
+    except json.JSONDecodeError:
+        return "Error: Shared JSON is temporarily locked or corrupted."
+
+    agent_section_data = shared_data.get(section_key)
+    
+    if agent_section_data is None:
+        return f"Error: Section '{section_key}' not found in shared JSON."
+
+    if isinstance(agent_section_data, (dict, list)):
+        formatted_text = json.dumps(agent_section_data, indent=4)
+    else:
+        formatted_text = str(agent_section_data)
+
+    with open(output_txt_path, 'w', encoding='utf-8') as txt_file:
+        txt_file.write(formatted_text)
+        
+    return f"Success: Written to {output_txt_path}"
 
 
 def run_chat():
@@ -47,6 +78,10 @@ Response format:
         if user_input.lower() == 'exit':
             print('Exiting chat...')
             break
+            
+        
+        extract_json_section_to_txt("recipebook.json", "recipes", "extracted_recipes.txt")
+        
         history.append({'role': 'user', 'content': user_input})
         response = client.messages.create(
             model='claude-haiku-4-5-20251001',
@@ -56,7 +91,8 @@ Response format:
             messages=history,
         )
 
-        reply = response.content[0].text
+        reply = response.content.text
         print(f'Claude: {reply}')
         history.append({'role': 'assistant', 'content': reply})
+
 run_chat()
