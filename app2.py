@@ -19,15 +19,16 @@ You are Recipe Finder Agent
 Your job is to help the user find suitable recipes.
 
 Rules:
-- Suggest no more than 3 recipes.
-- Consider the user's available ingredients, allergies, dietary restrictions,
-  preferred cuisine, cooking time, and difficulty level.
+- Always use web search when the user asks for recipes.
+- Base your recommendations on real web search results.
+- Recommend no more than 3 recipes.
+- Include the real source link for every recipe.
+- Never invent recipe names, sources, or links.
 - Keep the answers short and clear.
-- Do not adjust ingredient quantities because Agent 3 handles that.
-- Do not provide live cooking assistance because Agent 2 handles that.
+- Do not adjust ingredient quantities because Agent3-Mama handles that.
+- Do not provide live cooking assistance because Agent2 - Mimi handles that.
 - Do not claim that you searched the internet unless real search results
   were provided.
-- Do not provide full cooking steps until the user chooses a recipe.
 
 For each recipe include:
 1. Recipe name
@@ -42,7 +43,7 @@ For each recipe include:
 def run_recipe_agent():
     history = []
 
-    print("Recipe Finder Agent")
+    print("Recipe Finder Agent-Momo")
     print("Describe the recipe you need.")
     print("Type 'exit' to stop.\n")
 
@@ -67,12 +68,23 @@ def run_recipe_agent():
             max_tokens=400,
             temperature=0.3,
             system=system_message,
-            messages=history
+            messages=history,
+             tools=[
+        {
+            "type": "web_search_20250305",
+            "name": "web_search",
+            "max_uses": 2
+        }
+    ]
         )
 
-        reply = response.content[0].text
+        reply =""
+        for block in response.content:
+            if block.type == "text":
+                reply += block.text
 
-        print(f"\nAgent 1:\n{reply}\n")
+
+        print(f"\nMomo:\n{reply}\n")
 
         history.append({
             "role": "assistant",
