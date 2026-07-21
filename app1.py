@@ -1,5 +1,3 @@
-# Noga's File <3
-
 import os
 import json
 from anthropic import Anthropic
@@ -25,6 +23,65 @@ def save_recipe(recipe):
     with open("recipebook.json", "w") as f:
         json.dump(recipe_book, f, indent=2)
 
+# --- FUNCTION FOR MAIN.PY COLLABORATION ---
+def run_mimi_step(recipe_text: str) -> str:
+    """Processes a passed recipe string directly using Mimi's tools."""
+    system_message = """
+    Your name is Mimi, a recipe organizer.
+
+    Rules:
+        1. When the user pastes a complete recipe, extract its name, ingredient list,
+           instructions, and notes.
+        2. Preserve ingredient quantities and instruction details from the pasted recipe.
+        3. If the recipe has no title, create a short descriptive name based on its
+           main ingredient and preparation method.
+        4. Do not invent missing ingredients, instructions, or notes. Use an empty
+           list when there are no notes.
+        5. Call the save_recipe tool once the recipe has been extracted.
+        6. Only say that a recipe was saved after calling the tool.
+    """
+    tools = [
+        {
+            "name": "save_recipe",
+            "description": "Save a structured recipe in recipebook.json.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "ingredients": {"type": "array", "items": {"type": "string"}},
+                    "instructions": {"type": "array", "items": {"type": "string"}},
+                    "notes": {"type": "array", "items": {"type": "string"}}
+                },
+                "required": ["name", "ingredients", "instructions", "notes"]
+            }
+        }
+    ]
+    
+    response = client.messages.create(
+        model='claude-haiku-4-5-20251001',
+        max_tokens=1000,
+        temperature=0.2,
+        system=system_message,
+        messages=[{"role": "user", "content": recipe_text}],
+        tools=tools
+    )
+
+    reply_parts = []
+    saved_recipes = []
+
+    for block in response.content:
+        if block.type == "text":
+            reply_parts.append(block.text)
+        elif block.type == "tool_use" and block.name == "save_recipe":
+            save_recipe(block.input)
+            saved_recipes.append(block.input["name"])
+
+    if saved_recipes:
+        reply_parts.append(f"Recipe saved in recipebook.json: {', '.join(saved_recipes)}")
+
+    return "\n".join(reply_parts)
+
+# --- YOUR ORIGINAL STANDALONE TERMINAL LOOP ---
 def run_mimi():
     print('Paste your recipe, then type SEND on a new line. Type exit to quit.')
     system_message = """
@@ -40,7 +97,6 @@ def run_mimi():
            list when there are no notes.
         5. Call the save_recipe tool once the recipe has been extracted.
         6. Only say that a recipe was saved after calling the tool.
-
     """
     tools = [
         {
@@ -50,18 +106,9 @@ def run_mimi():
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "ingredients": {
-                        "type": "array",
-                        "items": {"type": "string"}
-                    },
-                    "instructions": {
-                        "type": "array",
-                        "items": {"type": "string"}
-                    },
-                    "notes": {
-                        "type": "array",
-                        "items": {"type": "string"}
-                    }
+                    "ingredients": {"type": "array", "items": {"type": "string"}},
+                    "instructions": {"type": "array", "items": {"type": "string"}},
+                    "notes": {"type": "array", "items": {"type": "string"}}
                 },
                 "required": ["name", "ingredients", "instructions", "notes"]
             }
@@ -75,24 +122,19 @@ def run_mimi():
 
         while True:
             line = input()
-
             if line.strip().lower() == 'send':
                 break
-
             if line.strip().lower() == 'exit' and not input_lines:
                 return
-
             input_lines.append(line)
 
         user_input = '\n'.join(input_lines).strip()
-
         if not user_input:
             print('Please paste a recipe before typing SEND.')
             continue
 
         history.append({'role': 'user', 'content': user_input})
-        print('History so far:', history)
-
+        
         response = client.messages.create(
             model='claude-haiku-4-5-20251001',
             max_tokens=1000,
@@ -113,11 +155,11 @@ def run_mimi():
                 saved_recipes.append(block.input["name"])
 
         if saved_recipes:
-            reply_parts.append(
-                f"Recipe saved in recipebook.json: {', '.join(saved_recipes)}"
-            )
+            reply_parts.append(f"Recipe saved in recipebook.json: {', '.join(saved_recipes)}")
 
         reply = "\n".join(reply_parts)
         print(f'Claude: {reply}')
         history.append({'role': 'assistant', 'content': reply})
 
+if __name__ == "__main__":
+    run_mimi()
