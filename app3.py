@@ -1,5 +1,6 @@
 import os
 import json
+from urllib import response
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
@@ -54,8 +55,8 @@ def extract_json_section_to_txt(json_path, section_key, output_txt_path):
     return f"Success: Written to {output_txt_path}"
 
 
-def run_chat():
-    print('You: (type exit to quit)')
+def run_mama():
+    print('(type exit to quit)')
     system_message = """
 You are Mama, an on-hand assistant chef
 Your job is to hep the user while cooking with any issues with ingredients, temp, cooking, or anything else, and advise them in cases of emergency
@@ -91,8 +92,11 @@ Response format:
             messages=history,
         )
 
-        reply = response.content.text
-        print(f'Claude: {reply}')
+        reply = ""
+        for block in response.content:
+         if block.type == "text":
+            reply += block.text
+        print(f'{reply}')
         history.append({'role': 'assistant', 'content': reply})
 
-run_chat()
+

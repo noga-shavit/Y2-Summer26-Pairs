@@ -25,7 +25,7 @@ def save_recipe(recipe):
     with open("recipebook.json", "w") as f:
         json.dump(recipe_book, f, indent=2)
 
-def run_chat():
+def run_mimi():
     print('Paste your recipe, then type SEND on a new line. Type exit to quit.')
     system_message = """
     Your name is Mimi, a recipe organizer.
@@ -121,4 +121,3 @@ def run_chat():
         print(f'Claude: {reply}')
         history.append({'role': 'assistant', 'content': reply})
 
-run_chat()
