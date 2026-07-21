@@ -1,6 +1,5 @@
 import os
 import json
-from urllib import response
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
@@ -24,12 +23,7 @@ def save_recipe(recipe):
     with open("recipebook.json", "w") as f:
         json.dump(recipe_book, f, indent=2)
 
-
 def extract_json_section_to_txt(json_path, section_key, output_txt_path):
-    """
-    Reads a shared JSON file, extracts a specific agent section, 
-    and writes it to a clean text file.
-    """
     if not os.path.exists(json_path):
         return f"Error: Shared JSON file not found at: {json_path}"
         
@@ -40,7 +34,6 @@ def extract_json_section_to_txt(json_path, section_key, output_txt_path):
         return "Error: Shared JSON is temporarily locked or corrupted."
 
     agent_section_data = shared_data.get(section_key)
-    
     if agent_section_data is None:
         return f"Error: Section '{section_key}' not found in shared JSON."
 
@@ -54,7 +47,42 @@ def extract_json_section_to_txt(json_path, section_key, output_txt_path):
         
     return f"Success: Written to {output_txt_path}"
 
+# --- FUNCTION FOR MAIN.PY COLLABORATION & WEB UI ---
+def run_mama_step(user_input: str, history: list) -> tuple[str, list]:
+    """Processes a message cleanly and writes the updated txt layout file."""
+    system_message = """
+    You are Mama, an on-hand assistant chef
+    Your job is to hep the user while cooking with any issues with ingredients, temp, cooking, or anything else, and advise them in cases of emergency
 
+    Rules:
+    - Always adhere to main kitchen rules: sanitation, cleanliness, clean ingredients, and organized work
+    - Always check up on the user after every prompt, to make sure no crises happened
+
+    Response format:
+    - Start by summarizing what the user said,
+    - Then give your response in a concise, understandable, and relevent way.
+    - End with one follow-up question for the user on their topic or previous question.
+    """
+    extract_json_section_to_txt("recipebook.json", "recipes", "extracted_recipes.txt")
+    
+    history.append({'role': 'user', 'content': user_input})
+    response = client.messages.create(
+        model='claude-haiku-4-5-20251001',
+        max_tokens=500,
+        temperature=0.8,
+        system=system_message,
+        messages=history,
+    )
+
+    reply = ""
+    for block in response.content:
+        if block.type == "text":
+            reply += block.text
+
+    history.append({'role': 'assistant', 'content': reply})
+    return reply, history
+
+# --- YOUR ORIGINAL STANDALONE TERMINAL LOOP ---
 def run_chat():
     print('You: (type exit to quit)')
     system_message = """
@@ -64,7 +92,6 @@ Your job is to hep the user while cooking with any issues with ingredients, temp
 Rules:
 - Always adhere to main kitchen rules: sanitation, cleanliness, clean ingredients, and organized work
 - Always check up on the user after every prompt, to make sure no crises happened
-- 
 
 Response format:
 - Start by summarizing what the user said,
@@ -75,15 +102,13 @@ Response format:
 
     while True:
         user_input = input('>> ')
-
         if user_input.lower() == 'exit':
             print('Exiting chat...')
             break
             
-        
         extract_json_section_to_txt("recipebook.json", "recipes", "extracted_recipes.txt")
-        
         history.append({'role': 'user', 'content': user_input})
+        
         response = client.messages.create(
             model='claude-haiku-4-5-20251001',
             max_tokens=500,
@@ -92,10 +117,13 @@ Response format:
             messages=history,
         )
 
-        reply = response.content.text
+        reply = ""
+        for block in response.content:
+            if block.type == "text":
+                reply += block.text
+
         print(f'Claude: {reply}')
         history.append({'role': 'assistant', 'content': reply})
 
-run_chat()
-
-# https://share.google/aimode/JfsFTlIknaUPq55mC
+if __name__ == "__main__":
+    run_chat()
