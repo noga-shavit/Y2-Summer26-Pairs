@@ -14,7 +14,7 @@ client = Anthropic(api_key=api_key)
 
 
 system_message = """
-You are Recipe Finder Agent
+your name is Momo, You are Recipe Finder Agent
 
 Your job is to help the user find suitable recipes.
 
