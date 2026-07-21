@@ -97,3 +97,5 @@ Response format:
         history.append({'role': 'assistant', 'content': reply})
 
 run_chat()
+
+# https://share.google/aimode/JfsFTlIknaUPq55mC
