@@ -55,6 +55,7 @@
     },
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       "name": "Perfect Pillowy Omelet",
       "ingredients": [
         "2 eggs",
@@ -72,6 +73,8 @@
         "Takes 2-3 minutes to cook",
         "Source: https://downshiftology.com/recipes/how-to-make-an-omelette/"
 =======
+=======
+>>>>>>> Stashed changes
       "name": "Arugula Salad with Parmesan and Shallots",
       "ingredients": [
         "Baby arugula",
@@ -140,6 +143,9 @@
         "Versatile, go-to salad that's naturally gluten-free and vegan",
         "Perfect for any meal",
         "Source: https://www.gimmesomeoven.com/everyday-salad-recipe/"
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       ]
     }
