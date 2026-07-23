@@ -53,8 +53,11 @@
         ]
     },
     {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+>>>>>>> 33f5e2834bee3a8f934229a78e0ad062a832089e
         "name": "Perfect Pillowy Omelet",
         "ingredients": [
             "2 eggs",
@@ -71,6 +74,7 @@
             "Easy difficulty level",
             "Takes 2-3 minutes to cook",
             "Source: https://downshiftology.com/recipes/how-to-make-an-omelette/"
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> Stashed changes
@@ -146,6 +150,8 @@
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> 33f5e2834bee3a8f934229a78e0ad062a832089e
         ]
     }
 ]
