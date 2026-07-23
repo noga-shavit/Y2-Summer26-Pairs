@@ -51,5 +51,24 @@
             "Cheesecake needs at least 4 hours in the fridge to set, or overnight for best results",
             "The frozen mozzarella adds a nice textural contrast when grated over the finished dessert"
         ]
+    },
+    {
+        "name": "Perfect Pillowy Omelet",
+        "ingredients": [
+            "2 eggs",
+            "pinch of Kosher salt",
+            "1 teaspoon of water"
+        ],
+        "instructions": [
+            "Heat oil in a pan",
+            "Whisk together eggs, salt, and water",
+            "Pour mixture into the hot pan",
+            "Cook for 2-3 minutes until set"
+        ],
+        "notes": [
+            "Easy difficulty level",
+            "Takes 2-3 minutes to cook",
+            "Source: https://downshiftology.com/recipes/how-to-make-an-omelette/"
+        ]
     }
 ]
