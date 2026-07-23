@@ -54,6 +54,7 @@
       ]
     },
     {
+<<<<<<< Updated upstream
       "name": "Perfect Pillowy Omelet",
       "ingredients": [
         "2 eggs",
@@ -70,6 +71,76 @@
         "Easy difficulty level",
         "Takes 2-3 minutes to cook",
         "Source: https://downshiftology.com/recipes/how-to-make-an-omelette/"
+=======
+      "name": "Arugula Salad with Parmesan and Shallots",
+      "ingredients": [
+        "Baby arugula",
+        "Olive oil",
+        "Lemon juice",
+        "Parmesan cheese",
+        "Shallots"
+      ],
+      "instructions": [
+        "Dress baby arugula with olive oil and lemon juice",
+        "Add Parmesan shavings",
+        "Top with thinly sliced shallots"
+      ],
+      "notes": [
+        "Very easy salad",
+        "Estimated time: 5-10 minutes",
+        "Perfect for a quick, fresh, and elegant salad with minimal prep",
+        "Source: https://www.acouplecooks.com/best-salad-recipes/"
+      ]
+    },
+    {
+      "name": "Greek Salad",
+      "ingredients": [
+        "Cucumber",
+        "Onion",
+        "Feta cheese",
+        "Kalamata olives",
+        "Fresh herbs",
+        "Olive oil",
+        "Lemon juice"
+      ],
+      "instructions": [
+        "Combine cucumber, onion, and fresh herbs",
+        "Add feta cheese and Kalamata olives",
+        "Dress with olive oil and lemon juice"
+      ],
+      "notes": [
+        "Easy difficulty",
+        "Estimated time: 10-15 minutes",
+        "A classic, refreshing salad that's versatile and can be a side or main dish",
+        "Source: https://www.acouplecooks.com/best-salad-recipes/"
+      ]
+    },
+    {
+      "name": "Everyday Salad with Lemony Dressing",
+      "ingredients": [
+        "Spring greens",
+        "Red onion",
+        "Cucumber",
+        "Bell pepper",
+        "Carrot",
+        "Nuts or seeds",
+        "Olive oil",
+        "Lemon juice",
+        "Dijon mustard",
+        "Garlic"
+      ],
+      "instructions": [
+        "Combine spring greens with red onion, cucumber, bell pepper, and carrot",
+        "Sprinkle with nuts or seeds for protein",
+        "Toss with lemony dressing made from olive oil, lemon juice, Dijon mustard, and garlic"
+      ],
+      "notes": [
+        "Very easy salad",
+        "Estimated time: Less than 10 minutes",
+        "Versatile, go-to salad that's naturally gluten-free and vegan",
+        "Perfect for any meal",
+        "Source: https://www.gimmesomeoven.com/everyday-salad-recipe/"
+>>>>>>> Stashed changes
       ]
     }
   ]
