@@ -53,6 +53,7 @@
         ]
     },
     {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -76,6 +77,8 @@
             "Source: https://downshiftology.com/recipes/how-to-make-an-omelette/"
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         "name": "Arugula Salad with Parmesan and Shallots",
@@ -147,11 +150,14 @@
             "Perfect for any meal",
             "Source: https://www.gimmesomeoven.com/everyday-salad-recipe/"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
 >>>>>>> 33f5e2834bee3a8f934229a78e0ad062a832089e
+=======
+>>>>>>> Stashed changes
         ]
     }
 ]
